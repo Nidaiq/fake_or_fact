@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 import re
 import string
 import numpy as np
-from tqdm import tqdm
+#from tqdm import tqdm
 import time
 from collections import Counter
 import nltk.data
