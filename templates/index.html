@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake News Detector</title>
+</head>
+<body>
+    <h1>Welcome to Index Page!</h1>
+    <div>
+        <input id="title" type="text" placeholder="Paste your Article's Title here"><br>
+        <input id="text" type="text" placeholder="Paste your Article's Text here"><br>
+        <button id="verifyButton" onclick="getData()">Verify!</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
