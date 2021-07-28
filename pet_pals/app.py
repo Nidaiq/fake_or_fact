@@ -2,7 +2,7 @@
 import os
 import pandas as pd
 from sqlalchemy import create_engine
-from config import postgrespwd
+#from config import postgrespwd
 import re
 import string
 import numpy as np
