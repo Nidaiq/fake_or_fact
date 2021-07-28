@@ -1,27 +1,49 @@
+# import necessary libraries
+import os
 import pandas as pd
 from sqlalchemy import create_engine
-from flask import Flask, render_template, redirect, request, jsonify
-from config import postgrespwd
+#from config import postgrespwd
 import re
 import string
 import numpy as np
-from tqdm import tqdm
+#from tqdm import tqdm
 import time
 from collections import Counter
-# from pathlib import Path
-# import matplotlib.pyplot as plt
-# from sklearn.linear_model import LinearRegression
 import nltk.data
-# from nltk.tokenize import sent_tokenize, word_tokenize
-# from nltk.corpus import stopwords
+from flask import (
+    Flask,
+    render_template,
+    jsonify,
+    request,
+    redirect)
 
-db_string = f"postgresql://postgres:{postgrespwd}@localhost:5432/FakeNewsDetector"
-engine = create_engine(db_string)
-
+#################################################
+# Flask Setup
+#################################################
 app = Flask(__name__)
-@app.route('/')
+
+#################################################
+# Database Setup
+#################################################
+
+from flask_sqlalchemy import SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
+
+# Remove tracking modifications
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+from .models import Pet
+
+
+# create route that renders index.html template
+@app.route("/")
 def welcome():
     return render_template("index.html")
+
+
+# Query the database and send the jsonified results
 
 @app.route('/verify/<title>/<text>', methods=['GET', 'POST'])
 def verifyArticle(title,text):
@@ -62,4 +84,5 @@ def verifyArticle(title,text):
     # return(articleInfo)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+	app.debug = True
+app.run()
