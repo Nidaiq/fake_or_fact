@@ -2,11 +2,11 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine
 from flask import Flask, render_template, redirect, request, jsonify
-from config import postgrespwd
+#from config import postgrespwd
 import re
 import string
 import numpy as np
-from tqdm import tqdm
+#from tqdm import tqdm
 import time
 from collections import Counter
 # from pathlib import Path
@@ -18,6 +18,7 @@ import nltk.data
 
 #db_string = f"postgresql://postgres:{postgrespwd}@localhost:5432/FakeNewsDetector"
 #engine = create_engine(db_string)
+
 
 app = Flask(__name__)
 @app.route('/')
@@ -47,7 +48,7 @@ def verifyArticle(title,text):
     nltk.download('averaged_perceptron_tagger')
     ndf = pd.DataFrame()
     text = article_df['article'].apply(nltk.tokenize.WhitespaceTokenizer().tokenize)
-    for i in tqdm(text): 
+    for i in text: 
         N = nltk.pos_tag(i)
         C = Counter([j for i,j in N])
         S = pd.Series([C])
@@ -61,6 +62,7 @@ def verifyArticle(title,text):
     # Output from ML is returned in next line
     return render_template("results.html",results=nlp_output_df.to_html())
     # return(articleInfo)
+
 
 if __name__ == "__main__":
     app.debug = True
