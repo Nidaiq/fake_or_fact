@@ -15,6 +15,8 @@ from collections import Counter
 import nltk.data
 # from nltk.tokenize import sent_tokenize, word_tokenize
 # from nltk.corpus import stopwords
+import pickle
+from sklearn.preprocessing import StandardScaler
 
 #db_string = f"postgresql://postgres:{postgrespwd}@localhost:5432/FakeNewsDetector"
 #engine = create_engine(db_string)
@@ -30,7 +32,8 @@ def verifyArticle(subject,title,text):
     articleInfo = {'subject':subject,'title':title,'text':text}
     article_df = pd.DataFrame(articleInfo, index=[0])
     article_df['article'] = article_df['title']+" "+article_df['text']
-    article_df.drop(['title','text'],axis=1,inplace=True)
+    article_df['title'] = article_df['title'].str.replace('U.S.', 'USA').str.replace('U.S', 'USA').str.replace(' US ', ' USA ')
+    article_df['text'] = article_df['text'].str.replace('U.S.', 'USA').str.replace('U.S', 'USA').str.replace(' US ', ' USA ')
     article_df['article'] = article_df['article'].str.replace('U.S.', 'USA').str.replace('U.S', 'USA').str.replace(' US ', ' USA ')
     @np.vectorize
     def wordpre(x):
@@ -45,12 +48,18 @@ def verifyArticle(subject,title,text):
         x = re.sub('\n', '', x)
         x = re.sub('\w*\d\w*', '', x)
         return x
+    article_df['title']= article_df['title'].apply(wordpre)
+    article_df['text']= article_df['text'].apply(wordpre)
     article_df['article']= article_df['article'].apply(wordpre)
     stop = stopwords.words('english')
-    article_df['article']= article_df['article'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
-    article_df['article_count'] = article_df['article'].apply(len)-1
-    article_df['article_tokens'] = article_df['article'].apply(word_tokenize)
-    article_df['article_tokens_count'] = article_df['article_tokens'].apply(len)
+    article_df['title']= article_df['title'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+    article_df['text']= article_df['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
+    article_df['title_count'] = article_df['title'].apply(len)-1
+    article_df['text_count'] = article_df['text'].apply(len)-1
+    article_df['title_tokens'] = article_df['title'].apply(word_tokenize)
+    article_df['text_tokens'] = article_df['text'].apply(word_tokenize)
+    article_df['title_tokenized_count'] = article_df['title_tokens'].apply(len)
+    article_df['text_tokenized_count'] = article_df['text_tokens'].apply(len)
     subject_dummies = pd.get_dummies(article_df['subject'])
     ndf = pd.DataFrame()
     text = article_df['article'].apply(nltk.tokenize.WhitespaceTokenizer().tokenize)
@@ -63,12 +72,24 @@ def verifyArticle(subject,title,text):
     ndf["sum"] = ndf.sum(axis=1)
     ndf = ndf.div(ndf['sum'], axis=0) *100
     features_df = pd.concat([
-        article_df.drop(['subject','article','article_tokens'],axis=1),
-        subject_dummies,
-        ndf.drop('sum',axis=1)
-        ], axis=1)
-    # Feed features_df to the ML model
-    return render_template("results.html",results=features_df.to_html())
+    article_df.drop(['subject','title','text','article','title_tokens','text_tokens'],axis=1),
+    subject_dummies,
+    ndf.drop('sum',axis=1)
+    ], axis=1)
+    reqd_features = ['title_count', 'text_count', 'title_tokenized_count',
+        'text_tokenized_count', 'US News', 'World News', 'JJ', 'NN', 'VBZ',
+        'RP', 'VBG', 'VBP', 'DT', 'RB', 'VB', 'CC', 'PRP', 'IN', 'VBD', 'TO',
+        'PRP$', 'NNS', 'JJS', 'CD', 'JJR', 'RBR', 'VBN', 'MD', 'WP', 'FW',
+        'NNP', 'WRB', 'WDT', 'PDT', 'EX', 'RBS', 'NNPS', 'UH', 'WP$', 'POS']
+    for i in reqd_features:
+        if(i not in list(features_df.columns)):
+            features_df[i]=0
+    features = features_df.iloc[0]
+    root = os.path.dirname(os.path.abspath(__file__))  
+    ml_file_path = os.path.join(root, 'static/svm_model.sav')
+    model = pickle.load(open(ml_file_path, 'rb'))
+    result = model.predict(features)[0]
+    return render_template("results.html",results=result)
 
 
 

@@ -1,8 +1,8 @@
 function getData() {
     if (d3.select('input[id="switch"] + label').style('background-color') == 'rgb(250, 121, 10)') {
-        subject = 'usnews'
+        subject = 'US News'
     }else if(d3.select('input[id="switch"] + label').style('background-color') == 'rgb(47, 156, 33)') {
-        subject='worldnews'
+        subject='World News'
     };
     var title = d3.select('#title').property('value');
     var text = d3.select('#text').property('value');  
