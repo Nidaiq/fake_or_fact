@@ -13,8 +13,8 @@ from collections import Counter
 # import matplotlib.pyplot as plt
 # from sklearn.linear_model import LinearRegression
 import nltk.data
-# from nltk.tokenize import sent_tokenize, word_tokenize
-# from nltk.corpus import stopwords
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
 import pickle
 from sklearn.preprocessing import StandardScaler
 
@@ -89,6 +89,7 @@ def verifyArticle(subject,title,text):
     ml_file_path = os.path.join(root, 'static/svm_model.sav')
     model = pickle.load(open(ml_file_path, 'rb'))
     result = model.predict(features)[0]
+    
     return render_template("results.html",results=result)
 
 
