@@ -17,6 +17,17 @@ body {
   height: 100vh
 }
 
+#statement {
+  padding-top: 40%;
+}
+
+#verdict {
+  font-family: 'Rock Salt', cursive;
+  font-stretch: ultra-expanded;
+  font-size: 4em;
+  text-shadow: 4px 4px 3px rgba(196, 108, 7, 0.596);
+}
+
 #image {
   background-image: url(https://images.unsplash.com/photo-1618590067824-5ba32ca76ce9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFrZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
   background-position: center;
@@ -25,9 +36,9 @@ body {
   }
 
 #BrandName {
+  padding-top: 20%;
   font-family: 'Rock Salt', cursive;
   font-stretch: ultra-expanded;
-  padding-top: 20%;
   font-size: 4em;
   text-shadow: 4px 4px 3px rgba(196, 108, 7, 0.596);
 }
