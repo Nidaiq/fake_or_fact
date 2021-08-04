@@ -1,0 +1,151 @@
+html {
+  height: 100%vh
+  }
+
+body {
+  height: 100vh;
+  background-color: black;
+  color: rgba(228, 227, 227, 0.795);
+  font-family: 'Raleway', sans-serif;
+}
+
+#main-container {
+  height: 100vh;
+}
+
+.content {
+  height: 100vh
+}
+
+#statement {
+  padding-top: 40%;
+}
+
+#verdict {
+  font-family: 'Rock Salt', cursive;
+  font-stretch: ultra-expanded;
+  font-size: 4em;
+  text-shadow: 4px 4px 3px rgba(196, 108, 7, 0.596);
+}
+
+#image {
+  background-image: url(https://images.unsplash.com/photo-1618590067824-5ba32ca76ce9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZmFrZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  }
+
+#BrandName {
+  padding-top: 20%;
+  font-family: 'Rock Salt', cursive;
+  font-stretch: ultra-expanded;
+  font-size: 4em;
+  text-shadow: 4px 4px 3px rgba(196, 108, 7, 0.596);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.switchToggle input   {
+  height: 0; 
+  width: 0; 
+  visibility: hidden; 
+  position: absolute; 
+}
+.switchToggle label {
+  cursor: pointer; 
+  text-indent: -9999px; 
+  width: 150px; 
+  max-width: 300px; 
+  height:40px; 
+  background: #2f9c21; 
+  display: block; 
+  border-radius: 100px; 
+  position: relative; 
+}
+
+.switchToggle label:after {
+  content: ''; 
+  position: absolute; 
+  top: 2px; 
+  left: 2px; 
+  width: 35px; 
+  height: 35px; 
+  background: #fff; 
+  border-radius: 90px; 
+  transition: 0.5s; 
+}
+
+.switchToggle input:checked + label, .switchToggle input:checked + input + label  {
+  background: #fa790a; 
+}
+.switchToggle input + label:before, .switchToggle input + input + label:before {
+  content: 'World News'; 
+  position: absolute; 
+  top:8px; 
+  left: 35px; 
+  width: 100px; 
+  height: 26px; 
+  border-radius: 90px; 
+  transition: 0.5s; 
+  text-indent: 0; 
+  color: #fff; 
+}
+
+.switchToggle input:checked + label:before, .switchToggle input:checked + input + label:before {
+  content: 'US News'; 
+  position: absolute; 
+  top: 8px; 
+  left: 18px; 
+  width: 100px; 
+  height: 26px; 
+  border-radius: 90px; 
+  transition: 0.5s; 
+  text-indent: 0; 
+  color: #fff; 
+}
+
+.switchToggle input:checked + label:after, .switchToggle input:checked + input + label:after {
+  left: calc(100% - 2px); 
+  transform: translateX(-100%); 
+}
+
+.switchToggle label:active:after {
+  width: 90px;
+} 
+
+#title, #text {
+  background-color: rgb(191, 189, 187, 0.1);
+  border-color: black;
+  color: rgba(228, 227, 227, 0.795)
+}
+
+#title:hover, #text:hover{
+  border-color: rgba(250, 121, 10, 1);
+  transition-duration: 0.2s;
+}
+
+#title:focus, #text:focus {
+  border-color: rgba(250, 121, 10, 1);
+  box-shadow: 0 0 0 0.15rem rgba(250, 121, 10, 0.5);
+  transition-duration: 0.2s;
+}
+
+.btn .fas {
+  font-size: 3rem;
+  color:#fa790a;
+}
+
+.btn .fas:hover {
+  font-size: 3.2rem;
+  color:#fa790a;
+  text-shadow: 4px 4px 2px rgba(196, 108, 7, 0.596);
+  transition-duration: 0.2s;
+}
+
+.btn:focus {
+  box-shadow: none;
+}
