@@ -12,6 +12,6 @@ function getData() {
 }
 
 function tryAgain() {
-    console.log("hi from Try Again function");
-    // window.location.href = window.location.href+"/";
+    window.history.back()
 }
+
